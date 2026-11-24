@@ -1,0 +1,24 @@
+EvidenceTruth
+Copyright (c) 2026 Renaissance Nath. All rights reserved.
+
+This repository is public so that people can read and evaluate the work. It is not open source.
+
+You MAY:
+  - view and read the source code, documentation and design files on GitHub;
+  - run the code on your own computer only to evaluate it (for example, as part of reviewing a job application).
+
+You may NOT, without prior written permission from the copyright holder:
+  - copy (except as strictly necessary to view or run the software locally for evaluation), modify, merge, publish,
+    distribute, sublicense or sell the code or any part of it;
+  - use the code, the design system, the name "EvidenceTruth" or the logo in any product, service or website;
+  - host or offer the software, or a modified version of it, to anyone else.
+
+GitHub's Terms of Service allow other users to view and fork public repositories on GitHub; that permission does not
+extend to any use outside GitHub.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE SOFTWARE OR ITS USE.
+
+Third-party components keep their own licences (see docs/FREE_STACK.md). Evaluation datasets keep theirs (docs/DATASETS.md).
+
+For permission requests: open an issue on the repository or contact the author through their GitHub profile.

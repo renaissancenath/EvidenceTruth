@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="300" viewBox="0 0 880 300" role="img" aria-labelledby="t d">
+  <title id="t">EvidenceTruth checking an answer</title>
+  <desc id="d">Three claims from an AI answer are checked one after another. The first is marked Supported, the second Contradicted with the source sentence highlighted, the third Not a factual claim.</desc>
+  <style>
+    :root { --paper:#F7F5F0; --surface:#FFFFFF; --ink:#17181C; --ink2:#4A4F57; --line:#8C877D; --soft:#E4E0D7; --sup:#1E6B4A; --con:#B42318; --hl:#FFE14D; }
+    @media (prefers-color-scheme: dark) { :root { --paper:#121314; --surface:#1B1D20; --ink:#EDEBE6; --ink2:#B5B2AA; --line:#6B6E73; --soft:#2A2D31; --sup:#5CC08E; --con:#FF8A7A; } }
+    text { font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, -apple-system, sans-serif; fill: var(--ink); }
+    .bg { fill: var(--paper); }
+    .card { fill: var(--surface); stroke: var(--line); }
+    .muted { fill: var(--ink2); font-size: 13px; }
+    .claim { font-size: 15px; }
+    .chip-sup { stroke: var(--sup); fill: var(--surface); }
+    .chip-con { stroke: var(--con); fill: var(--surface); }
+    .chip-na { stroke: var(--line); fill: var(--surface); }
+    .t-sup { fill: var(--sup); font-weight: 700; font-size: 13px; }
+    .t-con { fill: var(--con); font-weight: 700; font-size: 13px; }
+    .t-na { fill: var(--ink2); font-weight: 700; font-size: 13px; }
+    .hl { fill: var(--hl); }
+    .on-hl { fill: #17181C; font-size: 14px; }
+    .bar { fill: var(--soft); }
+    .scan { fill: var(--ink); opacity: .08; }
+    /* 9-second loop: scan line passes each row, then its verdict appears */
+    .scanline { animation: scan 9s linear infinite; }
+    .v1 { animation: show1 9s infinite; } .v2 { animation: show2 9s infinite; } .v3 { animation: show3 9s infinite; }
+    .ev { animation: show4 9s infinite; }
+    .hlr { transform-origin: 0 0; animation: sweep 9s infinite; }
+    @keyframes scan { 0% { transform: translateY(0); opacity: 0 } 3% { opacity: 1 } 40% { transform: translateY(150px); opacity: 1 } 45%,100% { transform: translateY(150px); opacity: 0 } }
+    @keyframes show1 { 0%,12% { opacity: 0 } 16%,92% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes show2 { 0%,25% { opacity: 0 } 29%,92% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes show3 { 0%,38% { opacity: 0 } 42%,92% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes show4 { 0%,46% { opacity: 0 } 50%,92% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes sweep { 0%,52% { transform: scaleX(0) } 62%,92% { transform: scaleX(1) } 100% { transform: scaleX(1) } }
+    @media (prefers-reduced-motion: reduce) { .scanline { display: none } .v1, .v2, .v3, .ev, .hlr { animation: none } }
+  </style>
+  <rect class="bg" width="880" height="300" rx="12"/>
+  <text x="28" y="38" style="font-weight:700;font-size:17px">EvidenceTruth</text>
+  <text x="852" y="38" text-anchor="end" class="muted">3 claims checked</text>
+
+  <!-- claims list -->
+  <rect class="card" x="28" y="56" width="420" height="200" rx="8"/>
+  <g class="scanline"><rect class="scan" x="29" y="62" width="418" height="46"/></g>
+  <text x="48" y="92" class="claim">The Eiffel Tower was built from 1887 to 1889.</text>
+  <rect class="bar" x="44" y="113" width="388" height="1"/>
+  <text x="48" y="142" class="claim">The Eiffel Tower is 450 metres tall.</text>
+  <rect class="bar" x="44" y="163" width="388" height="1"/>
+  <text x="48" y="192" class="claim">It is the most beautiful tower in Europe.</text>
+
+  <g class="v1"><rect class="chip-sup" x="48" y="98" width="88" height="0"/><text x="48" y="110" class="t-sup">&#10003; Supported</text></g>
+  <g class="v2"><text x="48" y="160" class="t-con">&#10005; Contradicted</text></g>
+  <g class="v3"><text x="48" y="210" class="t-na">&#8212; Not a factual claim</text></g>
+  <text x="48" y="240" class="muted">Opinions are recognised and left alone.</text>
+
+  <!-- evidence card -->
+  <g class="ev">
+    <rect class="card" x="468" y="56" width="384" height="200" rx="8"/>
+    <rect class="chip-con" x="488" y="74" width="132" height="26" rx="4" stroke-width="1.5"/>
+    <text x="500" y="92" class="t-con">&#10005; Contradicted</text>
+    <text x="488" y="128" style="font-weight:700;font-size:16px">“The Eiffel Tower is 450 metres tall.”</text>
+    <text x="488" y="158" class="muted" style="font-weight:700">Evidence</text>
+    <rect x="488" y="168" width="2" height="54" class="bar"/>
+    <g class="hlr"><rect class="hl" x="498" y="170" width="250" height="24" rx="2"/></g>
+    <text x="502" y="187" class="on-hl">The tower is 330 metres tall.</text>
+    <text x="498" y="214" class="muted">eiffel.txt · page 1 · contradicts the claim</text>
+  </g>
+  <text x="28" y="282" class="muted">Every verdict shows the passage that decided it, quoted word for word.</text>
+</svg>
