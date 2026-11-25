@@ -1,0 +1,11 @@
+**/node_modules
+**/.venv
+**/dist
+backend/web
+backend/backups
+**/*.db
+**/*.dump
+.env
+.git
+design/screenshots
+e2e

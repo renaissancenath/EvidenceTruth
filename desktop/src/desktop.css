@@ -1,0 +1,15 @@
+/* Desktop windows. Tokens only. The bubble is the one place a full circle is allowed (DESIGN_SYSTEM §6). */
+html.bubble-html, .bubble-body { background: transparent; min-width: 0; overflow: hidden; }
+.bubble-wrap { width: 64px; height: 64px; display: grid; place-items: center; -webkit-app-region: drag; }
+.bubble { -webkit-app-region: no-drag; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--et-line);
+  background: var(--et-surface); color: var(--et-ink); display: grid; place-items: center; cursor: pointer; }
+.bubble:hover { background: var(--et-line-soft); }
+.bubble.is-paused { color: var(--et-ink-2); border-style: dashed; }
+.panel-body { min-width: 320px; }
+kbd { border: 1px solid var(--et-line); border-radius: var(--et-radius-1); padding: 0 var(--et-space-1); }
+.panel-foot { display: flex; align-items: center; gap: var(--et-space-1); border-top: 1px solid var(--et-line); padding-top: var(--et-space-2); margin-top: var(--et-space-3); }
+.state { display: inline-flex; align-items: center; gap: var(--et-space-1); }
+.state .dot { width: 8px; height: 8px; border-radius: var(--et-radius-1); background: var(--et-ink-2); }
+.status-online .dot { background: var(--et-supported); }
+.status-offline .dot, .status-error .dot { background: var(--et-contradicted); }
+.bubble:focus-visible { outline: var(--et-focus-ring); outline-offset: var(--et-focus-offset); }

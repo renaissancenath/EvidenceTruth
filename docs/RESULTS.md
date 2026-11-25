@@ -1,37 +1,44 @@
 # Measured accuracy
 
 SciFact (expert-written scientific claims), **official dev split, 300 claims**, never used for training or tuning.
-Claim-level labels: supported, contradicted, not enough information. Protocol: `docs/plans/MODEL_BENCHMARK.md`.
+Claim-level labels: supported, contradicted, not enough information. Same protocol for every model
+(`docs/plans/MODEL_BENCHMARK.md`): thresholds chosen on training data only, dev scored once.
 
-"Cited abstract" gives the model the abstracts the claim cites; "search" retrieves the top 3 of all 5,183 abstracts
-with BM25 (the right abstract is in the top 3 for 83.5% of claims).
+"Cited abstract": the model is given the abstracts the claim cites. "Search": it must find them among all 5,183
+abstracts (BM25 top 3; the right abstract is in the top 3 for 83.5% of claims).
+
+All rows below come from one notebook run on a free Google Colab T4 GPU on 25 Nov 2026 (commit `4419890`); its
+summary table is reproduced as a screenshot in the README.
 
 ## Cited abstract
-| Verifier | Accuracy | Macro-F1 | F1 supported | F1 contradicted | F1 not enough info | Source |
-|---|---|---|---|---|---|---|
-| Majority class (baseline) | | 0.195 | | | | |
-| Word matching (lexical-v2) | 55.3% | 0.428 | 0.576 | 0.056 | 0.652 | run `20261123-110603` |
-| Learned v2 (word vectors), train90 protocol | 50.3% | 0.438 | 0.427 | 0.236 | 0.651 | run `20261123-191347` |
-| DeBERTa-v3-base, zero-shot, whole abstract | 50.7% | 0.465 | 0.286 | 0.504 | 0.604 | Colab T4, 24 Nov 2026 |
-| DeBERTa-v3-base, zero-shot, 3 sentences (MiniLM reranker) | 60.0% | 0.595 | 0.518 | 0.636 | 0.631 | Colab T4, 24 Nov 2026 |
-| **DeBERTa-v3-large, zero-shot, whole abstract** | **65.0%** | **0.652** | 0.598 | 0.688 | 0.669 | Colab T4, 24 Nov 2026 |
+| Verifier | Accuracy | Macro-F1 | F1 supported | F1 contradicted | F1 not enough info |
+|---|---|---|---|---|---|
+| Majority class (baseline) | | 0.195 | | | |
+| Word matching (lexical-v2) | 55.3% | 0.428 | 0.576 | 0.056 | 0.652 |
+| Learned v2 (word vectors, own protocol) | 57.0% | 0.516 | 0.574 | 0.259 | 0.717 |
+| DeBERTa-v3-base, 3 selected sentences | 61.3% | 0.609 | 0.543 | 0.642 | 0.641 |
+| DeBERTa-v3-large, whole abstract | 67.0% | 0.670 | 0.667 | **0.672** | 0.672 |
+| **MultiVerS (fever_sci)** | **72.7%** | **0.670** | **0.759** | 0.462 | **0.790** |
 
 ## Search over all abstracts
-| Verifier | Accuracy | Macro-F1 | F1 supported | F1 contradicted | F1 not enough info | Source |
-|---|---|---|---|---|---|---|
-| Word matching (lexical-v2) | 52.3% | 0.416 | 0.561 | 0.081 | 0.607 | run `20261123-111018` |
-| Learned v2, train90 protocol | 44.7% | 0.422 | 0.509 | 0.281 | 0.475 | run `20261123-191445` |
-| DeBERTa-v3-base, zero-shot | 46.7% | 0.439 | 0.295 | 0.467 | 0.554 | Colab T4, 24 Nov 2026 |
-| **DeBERTa-v3-large, zero-shot** | **54.3%** | **0.542** | 0.508 | 0.549 | 0.568 | Colab T4, 24 Nov 2026 |
+| Verifier | Accuracy | Macro-F1 | F1 supported | F1 contradicted | F1 not enough info |
+|---|---|---|---|---|---|
+| Word matching (lexical-v2) | 52.3% | 0.416 | 0.561 | 0.081 | 0.607 |
+| DeBERTa-v3-base, 3 selected sentences | 54.3% | 0.539 | 0.497 | 0.558 | 0.564 |
+| DeBERTa-v3-large, whole abstract | 52.7% | 0.527 | 0.549 | 0.537 | 0.495 |
+| **MultiVerS (fever_sci)** | **70.0%** | **0.640** | **0.750** | 0.422 | **0.748** |
 
-Colab rows: zero-shot cross-encoders (`cross-encoder/nli-deberta-v3-base`, `-large`), threshold chosen on official
-train only. Their full output, including confusion matrices, is saved in the notebook at commit `aa630b8`; the run
-folders will be added when the next notebook run is downloaded.
+## Models
+- **MultiVerS** (Wadden et al., 2022; code MIT): Longformer-large reading claim and whole abstract together, predicting
+  the label and the evidence sentences. The `fever_sci` checkpoint is trained on FEVER, PubMedQA and Evidence Inference,
+  **never on SciFact**. The released `scifact` checkpoint was trained on SciFact dev as well, so it is not used.
+- **DeBERTa-v3** cross-encoders trained for natural language inference (`cross-encoder/nli-deberta-v3-base`, `-large`),
+  used zero-shot.
+- Word matching and the learned verifiers are this project's own.
 
 ## What the numbers say
-- Meaning-based models are the step change: DeBERTa-v3-large lifts contradiction F1 from 0.06 to 0.69.
-- Finding the right abstract is now the largest loss: the same model drops from 65.0% to 54.3% when it has to search.
-- Choosing the few most relevant sentences helps the base model a lot (0.465 to 0.595 macro-F1); the large model with
-  the same selection is the next run, followed by MultiVerS (`fever_sci`, never trained on SciFact) and fine-tuning on
-  SciFact train with extra health-claim data.
-- 80% is the target. No configuration has reached it yet.
+- MultiVerS is the most accurate overall and holds up when it has to find the abstract itself (72.7% to 70.0%), because
+  it reads the whole abstract with a long-context model trained for this task.
+- DeBERTa-v3-large is the best at **contradictions** (F1 0.672 against MultiVerS's 0.462). The two models make different
+  mistakes, which is what an ensemble can use.
+- Picking the three most relevant sentences helps the smaller DeBERTa model (0.499 to 0.609 macro-F1).

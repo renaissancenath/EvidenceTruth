@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css">
+<style>.flow{display:flex;align-items:stretch;gap:8px}.flow .box{flex:1;padding:10px 12px}.flow .arrow{align-self:center}.flow .t{font-size:14px}.flow .d{font-size:12px;line-height:16px}</style></head><body><div id="canvas">
+<h1>From commit to users</h1>
+<p class="sub">Every change passes the same gates; releases need a person to approve. Everything here runs on free tiers.</p>
+<h2 style="margin-top:22px">Every push and pull request</h2>
+<div class="flow">
+ <div class="box"><div class="t">Guards</div><div class="d">secret scan, destructive-SQL check, UI anti-slop check</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Backend</div><div class="d">ruff, pyright, migrations on PostgreSQL 16, pytest, pip-audit, licences</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Web + extension</div><div class="d">types, unit tests, builds, npm audit</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">API contract</div><div class="d">OpenAPI breaking-change diff</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Walkthroughs</div><div class="d">Playwright: web, real extension, real Electron app</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Image</div><div class="d">Docker build and boot</div></div>
+</div>
+<div class="row" style="margin-top:22px;gap:24px">
+ <div style="flex:1"><h2>Service release · tag vX.Y.Z</h2><div class="flow">
+  <div class="box"><div class="t">CI again</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Image to GHCR</div><div class="d">+ extension zip</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box" style="border-color:var(--et-ink)"><div class="t">Person approves</div><div class="d">production environment</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Deploy</div><div class="d">migrations gated, backup first</div></div></div></div>
+ <div style="flex:1"><h2>Desktop release · tag desktop-vX.Y.Z</h2><div class="flow">
+  <div class="box"><div class="t">Windows runner</div><div class="d">unit tests</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Installer + portable</div><div class="d">SHA-256 sums</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">GitHub Release</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Service points to it</div><div class="d">apps offer the update; user approves</div></div></div></div>
+</div>
+<h2 style="margin-top:22px">After release</h2>
+<div class="flow">
+ <div class="box"><div class="t">Errors grouped</div><div class="d">fingerprint, scrubbed of user data</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Daily triage</div><div class="d">likely cause, GitHub issue</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box"><div class="t">Fix PR</div><div class="d">regression test first</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ <div class="box" style="border-color:var(--et-ink)"><div class="t">Engineer reviews</div><div class="d">agents never merge</div></div>
+</div>
+</div></body></html>

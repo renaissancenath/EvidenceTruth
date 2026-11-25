@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css"></head><body><div id="canvas">
+<h1>One account, one engine, three places to use it</h1>
+<p class="sub">The website, the browser extension and the Windows app all send text to the same service. None of them has its own checking logic or any secret keys.</p>
+<div class="row" style="margin-top:28px">
+  <div class="col" style="width:250px">
+    <h2>Where you use it</h2>
+    <div class="box"><div class="t">Web app</div><div class="d">Paste an answer, upload documents, see full reports</div></div>
+    <div class="box"><div class="t">Browser extension</div><div class="d">Scan a ChatGPT / Claude / Gemini page; claims underlined in place</div></div>
+    <div class="box"><div class="t">Windows desktop app</div><div class="d">Copy text in any app, press <span class="mono">Ctrl+Shift+E</span></div></div>
+  </div>
+  <div class="arrow" style="width:96px"><svg width="44" height="16" viewBox="0 0 44 16"><path d="M2 8h36M32 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>HTTPS<br>signed in to<br>your account</span></div>
+  <div class="col" style="flex:1">
+    <h2>EvidenceTruth service · FastAPI</h2>
+    <div class="box" style="padding:16px">
+      <div class="col" style="gap:8px">
+        <div><span class="step-n">1</span><b>Sign-in, plan and quota</b> <span class="muted">· sessions, CSRF, rate limits</span></div>
+        <div><span class="step-n">2</span><b>Redact</b> <span class="muted">· emails, keys, card numbers removed first</span></div>
+        <div><span class="step-n">3</span><b>Split into claims</b> <span class="muted">· facts vs opinions; compound sentences split</span></div>
+        <div><span class="step-n">4</span><b>Research</b> <span class="muted">· many queries, many sources, copies counted once</span></div>
+        <div><span class="step-n">5</span><b>Verify</b> <span class="muted">· score each passage: supports, contradicts, neither</span></div>
+        <div><span class="step-n">6</span><b>Verdict + the passage that decided it</b></div>
+      </div>
+    </div>
+    <div class="box soft"><div class="d" style="margin:0"><b style="color:var(--et-ink)">Production safety:</b> gated migrations with backups · error grouping and triage · CI on every change</div></div>
+  </div>
+  <div class="arrow" style="width:70px"><svg width="44" height="16" viewBox="0 0 44 16"><path d="M2 8h36M32 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+  <div class="col" style="width:280px">
+    <h2>Sources (each off until you allow it)</h2>
+    <div class="box"><div class="t">Your documents</div><div class="d">PDF, DOCX, text: searched first</div></div>
+    <div class="box"><div class="t">Public sources</div><div class="d">Wikipedia · Semantic Scholar · arXiv · Crossref · PyPI · npm · web search (your SearXNG)</div></div>
+    <h2 style="margin-top:6px">Storage and services</h2>
+    <div class="box"><div class="t">PostgreSQL</div><div class="d">Users, checks, evidence, research records. Private network only</div></div>
+    <div class="box soft"><div class="d" style="margin:0">Stripe (plans) · email sign-in links</div></div>
+  </div>
+</div>
+</div></body></html>

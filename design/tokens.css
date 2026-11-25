@@ -1,0 +1,93 @@
+/* EvidenceTruth design tokens. Source: docs/DESIGN_SYSTEM.md. Do not add values here without a DESIGN_LOG entry. */
+
+/* Fonts: self-hosted via @fontsource/atkinson-hyperlegible-next and -mono (imported by each app). No CDN. */
+
+:root {
+  /* colour: light */
+  --et-paper: #F7F5F0;
+  --et-surface: #FFFFFF;
+  --et-ink: #17181C;
+  --et-ink-2: #4A4F57;
+  --et-line: #8C877D;
+  --et-line-soft: #E4E0D7;
+  --et-highlight: #FFE14D;
+  --et-on-highlight: #17181C;
+  --et-focus: #1D4ED8;
+  --et-supported: #1E6B4A;
+  --et-contradicted: #B42318;
+  --et-unsupported: #8A5300;
+  --et-unverifiable: #4A4F57;
+
+  /* type */
+  --et-font-sans: "Atkinson Hyperlegible Next", system-ui, "Segoe UI", sans-serif;
+  --et-font-mono: "Atkinson Hyperlegible Mono", ui-monospace, Consolas, monospace;
+  --et-text-xs: 12px;  --et-lh-xs: 16px;
+  --et-text-sm: 13px;  --et-lh-sm: 20px;
+  --et-text-md: 14px;  --et-lh-md: 20px;
+  --et-text-lg: 16px;  --et-lh-lg: 24px;
+  --et-text-xl: 20px;  --et-lh-xl: 28px;
+  --et-text-2xl: 24px; --et-lh-2xl: 32px;
+
+  /* spacing: 4-point grid */
+  --et-space-1: 4px;
+  --et-space-2: 8px;
+  --et-space-3: 12px;
+  --et-space-4: 16px;
+  --et-space-5: 20px;
+  --et-space-6: 24px;
+  --et-space-8: 32px;
+  --et-space-10: 40px;
+  --et-space-12: 48px;
+  --et-space-16: 64px;
+
+  /* radius: no pills */
+  --et-radius-0: 0;
+  --et-radius-1: 2px;
+  --et-radius-2: 4px;
+  --et-radius-3: 8px;
+
+  /* sizes */
+  --et-control-h: 32px;
+  --et-target-min: 32px;
+  --et-focus-ring: 2px solid var(--et-focus);
+  --et-focus-offset: 2px;
+}
+
+[data-theme="dark"] {
+  --et-paper: #121314;
+  --et-surface: #1B1D20;
+  --et-ink: #EDEBE6;
+  --et-ink-2: #B5B2AA;
+  --et-line: #6B6E73;
+  --et-line-soft: #2A2D31;
+  --et-highlight: #FFE14D;
+  --et-on-highlight: #17181C;
+  --et-focus: #8AB4FF;
+  --et-supported: #5CC08E;
+  --et-contradicted: #FF8A7A;
+  --et-unsupported: #E3A64A;
+  --et-unverifiable: #B5B2AA;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --et-paper: #121314;
+    --et-surface: #1B1D20;
+    --et-ink: #EDEBE6;
+    --et-ink-2: #B5B2AA;
+    --et-line: #6B6E73;
+    --et-line-soft: #2A2D31;
+    --et-focus: #8AB4FF;
+    --et-supported: #5CC08E;
+    --et-contradicted: #FF8A7A;
+    --et-unsupported: #E3A64A;
+    --et-unverifiable: #B5B2AA;
+  }
+}
+
+/* Motion: none by default. */
+*, *::before, *::after { transition: none; animation: none; }
+
+:focus-visible { outline: var(--et-focus-ring); outline-offset: var(--et-focus-offset); }
+
+.et-decisive { background: var(--et-highlight); color: var(--et-on-highlight); }

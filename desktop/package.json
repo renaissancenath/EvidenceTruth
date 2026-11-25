@@ -1,0 +1,66 @@
+{
+  "name": "evidencetruth-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "EvidenceTruth desktop companion: checks text you copy, from any app, with your EvidenceTruth account.",
+  "main": "main.cjs",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite build && electron .",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "node --test test/desktop.test.cjs",
+    "config": "node scripts/write-build-config.cjs",
+    "dist:win": "node scripts/write-build-config.cjs && vite build && electron-builder --win portable nsis",
+    "dist:win:portable": "node scripts/write-build-config.cjs && vite build && electron-builder --win portable",
+    "dist:mac": "node scripts/write-build-config.cjs && vite build && electron-builder --mac dmg",
+    "dist:linux": "node scripts/write-build-config.cjs && vite build && electron-builder --linux AppImage"
+  },
+  "devDependencies": {
+    "electron": "45.4.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "app.evidencetruth.desktop",
+    "productName": "EvidenceTruth",
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "lib/**",
+      "build-config.json",
+      "dist/**",
+      "assets/**",
+      "package.json"
+    ],
+    "win": {
+      "icon": "assets/icon.png",
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "portable": {
+      "artifactName": "EvidenceTruth-${version}-portable.exe"
+    },
+    "directories": {
+      "output": "release"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "EvidenceTruth-${version}-setup.exe",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "compression": "maximum"
+  },
+  "author": {
+    "name": "Renaissance Nath",
+    "url": "https://github.com/renaissancenath"
+  },
+  "homepage": "https://github.com/renaissancenath/EvidenceTruth",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "dependencies": {
+    "electron-updater": "6.8.11"
+  }
+}

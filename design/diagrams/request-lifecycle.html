@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css">
+<style>.lane{display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:stretch}.lane>h2{margin:0;padding-top:16px}.flow{display:flex;align-items:center;gap:8px}.flow .box{flex:1;padding:10px 12px}.flow .t{font-size:14px}.flow .d{font-size:12px;line-height:16px}.v{display:flex;justify-content:center;color:var(--et-ink-2);margin:6px 0 6px 214px;width:calc(100% - 214px)}</style></head><body><div id="canvas">
+<h1>Inside the server: one check, end to end</h1>
+<p class="sub"><span class="mono">POST /v1/scan</span> returns at once; verification runs in the background and results stream back claim by claim.</p>
+<div class="col" style="margin-top:22px;gap:0">
+ <div class="lane"><h2>1 · Middleware</h2><div class="flow">
+  <div class="box"><div class="t">Size limits</div><div class="d">413 before the body is read</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Client version</div><div class="d">old desktop apps get 426</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Origin check</div><div class="d">blocks cross-site posts</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">CORS + headers</div><div class="d">CSP, HSTS, no-store</div></div></div></div>
+ <div class="v"><svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 1v16M2 13l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+ <div class="lane"><h2>2 · Dependencies</h2><div class="flow">
+  <div class="box"><div class="t">Session</div><div class="d">cookie + CSRF header, or bearer token; hashed lookup</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Rate limit</div><div class="d">sliding window per user and route</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Plan quota</div><div class="d">checks per month, server-side</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Redact</div><div class="d">emails, keys, cards, phones</div></div></div></div>
+ <div class="v"><svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 1v16M2 13l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+ <div class="lane"><h2>3 · Request</h2><div class="flow">
+  <div class="box"><div class="t">Extract claims</div><div class="d">sentences with exact spans; fact or opinion</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Decompose</div><div class="d">compound sentence → parent + atomic parts</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Store</div><div class="d">scan, claims (parent_id)</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box" style="border-style:dashed"><div class="t">202-style reply</div><div class="d">scan id, claims marked "checking"</div></div></div></div>
+ <div class="v"><svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 1v16M2 13l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+ <div class="lane"><h2>4 · Background task</h2><div class="flow">
+  <div class="box"><div class="t">Your documents</div><div class="d">BM25 over your chunks</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Research</div><div class="d">queries, providers, budget, independence</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Gate + rank</div><div class="d">must name the subject; best first</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Stance</div><div class="d">lexical or NLI per passage</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Aggregate</div><div class="d">label, confidence, minimal decisive set</div></div></div></div>
+ <div class="v"><svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 1v16M2 13l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+ <div class="lane"><h2>5 · Results</h2><div class="flow">
+  <div class="box"><div class="t">Write</div><div class="d">verdicts, evidence, sources, research_runs</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Parents combined</div><div class="d">from their parts' verdicts</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Stream</div><div class="d"><span class="mono">GET /v1/scan/{id}/events</span> (SSE) or polling</div></div><svg width="36" height="14" viewBox="0 0 36 14"><path d="M2 7h28M25 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <div class="box"><div class="t">Client</div><div class="d">web, extension or desktop renders the same claim card</div></div></div></div>
+</div>
+</div></body></html>

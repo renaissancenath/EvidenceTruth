@@ -1,0 +1,27 @@
+/* Shared style for README diagrams. Rendered to PNG by scripts/render_diagrams.cjs (light and dark). */
+@import url("../tokens.css");
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 400; src: url("../../node_modules/@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-400-normal.woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 600; src: url("../../node_modules/@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-600-normal.woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 700; src: url("../../node_modules/@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-700-normal.woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Mono"; font-weight: 400; src: url("../../node_modules/@fontsource/atkinson-hyperlegible-mono/files/atkinson-hyperlegible-mono-latin-400-normal.woff2"); }
+* { box-sizing: border-box; margin: 0; }
+body { background: transparent; font-family: var(--et-font-sans); color: var(--et-ink); }
+#canvas { background: var(--et-paper); padding: 40px; width: 1280px; border-radius: 12px; }
+h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--et-ink-2); margin-bottom: 10px; }
+.sub { color: var(--et-ink-2); font-size: 15px; margin-top: 4px; }
+.box { background: var(--et-surface); border: 1px solid var(--et-line); border-radius: 8px; padding: 14px 16px; }
+.box.soft { border-color: var(--et-line-soft); }
+.t { font-weight: 700; font-size: 16px; }
+.d { color: var(--et-ink-2); font-size: 13px; line-height: 18px; margin-top: 3px; }
+.mono { font-family: var(--et-font-mono); font-size: 12px; color: var(--et-ink-2); }
+.row { display: flex; gap: 14px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 10px; }
+.arrow { flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--et-ink-2); font-size: 12px; text-align: center; gap: 4px; }
+.arrow svg { display: block; }
+.mark { background: var(--et-highlight); color: var(--et-on-highlight); padding: 0 4px; border-radius: 2px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid currentColor; border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 13px; background: var(--et-surface); }
+.c-sup { color: var(--et-supported); } .c-con { color: var(--et-contradicted); } .c-uns { color: var(--et-unsupported); } .c-unv { color: var(--et-unverifiable); }
+.ok { color: var(--et-supported); font-weight: 700; } .bad { color: var(--et-contradicted); font-weight: 700; } .muted { color: var(--et-ink-2); }
+.num { font-size: 40px; font-weight: 700; line-height: 44px; letter-spacing: -0.02em; }
+.step-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 4px; background: var(--et-ink); color: var(--et-paper); font-size: 12px; font-weight: 700; margin-right: 8px; }

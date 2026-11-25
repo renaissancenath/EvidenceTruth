@@ -1,0 +1,44 @@
+# secrets and local data
+.env
+*.env
+*.db
+*.db-wal
+*.db-shm
+backups/
+# datasets and runs (download with loaders)
+eval/data/
+eval/runs/*/raw/
+# build
+node_modules/
+dist/
+build/
+.cache/
+__pycache__/
+.venv/
+*.pyc
+extension/test-results/
+backend/.venv/
+backend/web/
+backend/backups/
+backend/.migration-plan.json
+*.db
+*.dump
+node_modules/
+dist/
+.env
+frontend/test-results/
+extension/test-results/
+
+# download packages
+/EvidenceTruth-*.zip
+
+/EvidenceTruth.bundle
+desktop/release/
+build-config.json
+
+# private engine tuning (backend/app/tuning.py)
+backend/private_config/*
+!backend/private_config/README.md
+backend/private_engine/
+eval/models/
+eval/bench/mv/

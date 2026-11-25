@@ -1,0 +1,24 @@
+[project]
+name = "evidencetruth-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 200
+target-version = "py312"
+extend-exclude = ["app/store/migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "SIM"]
+ignore = ["S101", "B008", "E731", "SIM108", "S311", "SIM905"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "E501", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.pyright]
+include = ["app"]
+typeCheckingMode = "basic"

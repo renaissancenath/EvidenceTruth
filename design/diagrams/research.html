@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css"></head><body><div id="canvas">
+<h1>How one claim is researched</h1>
+<p class="sub">Searches in several directions, reads the documents themselves, and never lets copies outvote independent sources.</p>
+<div class="row" style="margin-top:26px; align-items:center">
+  <div class="box" style="width:190px"><h2>Claim</h2><div style="font-size:15px;font-weight:600">“Mars has two moons, Phobos and Deimos.”</div></div>
+  <div class="arrow"><svg width="44" height="16" viewBox="0 0 44 16"><path d="M2 8h36M32 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+  <div class="col" style="width:230px">
+    <h2>Queries, three directions</h2>
+    <div class="box"><span class="ok">Support</span><div class="mono" style="margin-top:4px">Mars two moons</div></div>
+    <div class="box"><span class="bad">Contradict</span><div class="mono" style="margin-top:4px">Mars two moons myth OR false</div></div>
+    <div class="box"><b>Context</b><div class="mono" style="margin-top:4px">Mars</div></div>
+  </div>
+  <div class="arrow"><svg width="44" height="16" viewBox="0 0 44 16"><path d="M2 8h36M32 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+  <div class="col" style="width:230px">
+    <h2>Providers</h2>
+    <div class="box"><div class="d" style="margin:0;line-height:22px"><span class="ok">✓</span> Wikipedia <span class="muted">searched</span><br><span class="ok">✓</span> Semantic Scholar <span class="muted">searched</span><br><span class="bad">✕</span> arXiv <span class="muted">failed: shown, others continue</span><br><span class="muted">–</span> Web search <span class="muted">not allowed</span></div></div>
+    <div class="box soft"><div class="d" style="margin:0">Budget: requests, seconds, sources. When it runs out, the record says so.</div></div>
+  </div>
+  <div class="arrow"><svg width="44" height="16" viewBox="0 0 44 16"><path d="M2 8h36M32 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+  <div class="col" style="flex:1">
+    <h2>Evidence checks</h2>
+    <div class="box"><b>Read the page itself</b><div class="d">A title or snippet is never evidence</div></div>
+    <div class="box"><b>Must name the claim's subject</b><div class="d">“Sun Belt car sales” is not about the Moon</div></div>
+    <div class="box"><b>Instructions in pages are set aside</b><div class="d">“Ignore previous instructions…” is data, never obeyed</div></div>
+    <div class="box"><b>Copies count once</b><div class="d">Same owner, same text, same DOI or same study → one group; at most 2 passages each</div></div>
+  </div>
+</div>
+<div class="row" style="margin-top:18px; align-items:center">
+  <div class="box" style="flex:1; display:flex; gap:18px; align-items:center">
+    <span class="muted" style="font-size:13px">Illustration</span><span class="chip c-sup">✓ Supported</span>
+    <span class="d" style="margin:0">The deciding sentence from the source is quoted word for word and <span class="mark">highlighted</span>, with its publisher, date and trust tier.</span>
+  </div>
+  <div class="box soft" style="width:330px"><div class="d" style="margin:0"><b style="color:var(--et-ink)">Research record</b> for every claim: each query, each provider's status, every document and why it was or wasn't used. <span class="mono">GET /v1/claims/{id}/research</span></div></div>
+</div>
+</div></body></html>

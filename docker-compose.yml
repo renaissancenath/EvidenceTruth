@@ -1,0 +1,27 @@
+# Local production-like stack: PostgreSQL 17 with pgvector + the app.
+#   cp .env.example .env   # fill in values
+#   docker compose up --build
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: et
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: evidencetruth
+    volumes: [dbdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U et -d evidencetruth"]
+      interval: 5s
+      retries: 10
+  app:
+    build: .
+    env_file: .env
+    environment:
+      ET_DATABASE_URL: postgresql://et:${POSTGRES_PASSWORD:-change-me}@db:5432/evidencetruth
+    ports: ["8000:8000"]
+    depends_on:
+      db: { condition: service_healthy }
+    volumes: [backups:/app/backups]
+volumes:
+  dbdata:
+  backups:

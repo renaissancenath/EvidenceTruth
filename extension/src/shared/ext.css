@@ -1,0 +1,10 @@
+/* Extension surfaces reuse the web app stylesheet; these rules size the popup and panel. Tokens only. */
+body { min-width: 320px; }
+.popup { width: 320px; padding: var(--et-space-4); }
+.popup > * + * { margin-top: var(--et-space-3); }
+.panel { padding: var(--et-space-4); }
+.panel > * + * { margin-top: var(--et-space-4); }
+.panel-head { display: flex; align-items: center; gap: var(--et-space-2); }
+.state { display: inline-flex; align-items: center; gap: var(--et-space-1); font-size: var(--et-text-sm); color: var(--et-ink-2); }
+.code-input { font-family: var(--et-font-mono); letter-spacing: 4px; font-size: var(--et-text-lg); }
+@media (min-width: 480px) { .evidence p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }

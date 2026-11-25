@@ -1,0 +1,37 @@
+# Render Blueprint, free plan: one Docker web service. The database is a free Neon PostgreSQL (paste its URL below),
+# because Render's free PostgreSQL is deleted after 30 days. Free web services sleep after 15 idle minutes and take
+# about a minute to wake up. Secrets marked sync: false are typed in the Render dashboard, never committed.
+services:
+  - type: web
+    name: evidencetruth
+    runtime: docker
+    plan: free
+    healthCheckPath: /v1/health
+    autoDeploy: true
+    envVars:
+      - key: ET_DATABASE_URL         # Neon: Dashboard > Connection string (postgresql://...?sslmode=require)
+        sync: false
+      - key: ET_SECRET_KEY
+        generateValue: true
+      - key: ET_PUBLIC_URL           # https://<service-name>.onrender.com, or your own domain
+        sync: false
+      - key: ET_EMAIL_BACKEND
+        value: smtp
+      - key: ET_SMTP_HOST
+        value: smtp.gmail.com
+      - key: ET_SMTP_PORT
+        value: "587"
+      - key: ET_SMTP_USER            # your Gmail address
+        sync: false
+      - key: ET_SMTP_PASSWORD        # a Gmail app password (myaccount.google.com/apppasswords)
+        sync: false
+      - key: ET_EMAIL_FROM           # EvidenceTruth <your Gmail address>
+        sync: false
+      - key: ET_SUPPORT_EMAIL
+        sync: false
+      - key: ET_CONTACT_EMAIL
+        sync: false
+      - key: ET_EXTENSION_IDS
+        sync: false
+      - key: ET_GITHUB_REPO
+        value: renaissancenath/EvidenceTruth

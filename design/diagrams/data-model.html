@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css">
+<style>.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}.tbl{background:var(--et-surface);border:1px solid var(--et-line);border-radius:8px;overflow:hidden}.tbl h3{font-size:14px;padding:8px 12px;background:var(--et-ink);color:var(--et-paper);font-family:var(--et-font-mono);font-weight:400}.tbl ul{list-style:none;padding:6px 12px 10px;margin:0}.tbl li{font-family:var(--et-font-mono);font-size:12px;line-height:19px;color:var(--et-ink-2)}.pk{color:var(--et-ink);font-weight:700}.fk{color:var(--et-focus)}.grp{grid-column:span 4;margin-top:6px}</style></head><body><div id="canvas">
+<h1>Data model</h1>
+<p class="sub">PostgreSQL, versioned with Alembic (expand-only migrations, backup first). Every user-owned row carries <span class="mono">user_id</span> and every query filters by it. <span class="mono" style="color:var(--et-ink)">pk</span> primary key · <span class="mono" style="color:var(--et-focus)">→ fk</span> foreign key</p>
+<div class="grid">
+ <h2 class="grp">Checking</h2>
+ <div class="tbl"><h3>scans</h3><ul><li class="pk">scan_id pk</li><li class="fk">user_id → users</li><li class="fk">document_id → documents</li><li>text_redacted · site · mode</li><li>status · expires_at</li></ul></div>
+ <div class="tbl"><h3>claims</h3><ul><li class="pk">claim_id pk</li><li class="fk">scan_id → scans</li><li class="fk">parent_id → claims</li><li>text · span_start · span_end</li><li>claim_type</li></ul></div>
+ <div class="tbl"><h3>verdicts</h3><ul><li class="pk fk">claim_id pk → claims</li><li>label · confidence · abstained</li><li>partial_sources</li><li>explanation · explanation_model</li><li>verifier_rev · latency_ms</li></ul></div>
+ <div class="tbl"><h3>evidence</h3><ul><li class="pk">evidence_id pk</li><li class="fk">claim_id → claims</li><li class="fk">source_id → sources</li><li>passage (verbatim) · stance</li><li>score · is_decisive</li></ul></div>
+ <div class="tbl"><h3>sources</h3><ul><li class="pk">source_id pk</li><li>url · title · publisher</li><li>provider · trust_tier</li><li>published_at · retrieved_at</li><li>http_status</li></ul></div>
+ <div class="tbl"><h3>research_runs</h3><ul><li class="pk fk">claim_id pk → claims</li><li class="fk">user_id → users</li><li>depth</li><li>record (queries, providers,</li><li>documents, budget, stop reason)</li></ul></div>
+ <div class="tbl"><h3>documents · doc_chunks</h3><ul><li class="pk">doc_id pk</li><li class="fk">user_id → users</li><li>filename · sha256 · pages</li><li>in_kb · stale</li><li class="fk">chunks: doc_id → documents</li></ul></div>
+ <div class="tbl"><h3>citation · code checks</h3><ul><li class="pk">check_id pk</li><li class="fk">scan_id → scans</li><li>exists · link_ok · title_score</li><li>year_match · supports_claim</li><li>language · passed · evidence</li></ul></div>
+ <h2 class="grp">Accounts and security</h2>
+ <div class="tbl"><h3>users</h3><ul><li class="pk">user_id pk</li><li>email · google_sub</li><li>plan · subscription_status</li><li>retention_days · is_admin</li><li>onboarded · last_login_at</li></ul></div>
+ <div class="tbl"><h3>auth_sessions</h3><ul><li class="pk">session_id pk</li><li class="fk">user_id → users</li><li>token_sha256 (hash only)</li><li>kind: web · extension</li><li>expires_at · revoked</li></ul></div>
+ <div class="tbl"><h3>magic_links · pairing_codes</h3><ul><li>token_sha256 / code_sha256</li><li>expires_at</li><li>used_at / used (single use)</li><li class="fk">pairing: user_id → users</li><li>raw tokens never stored</li></ul></div>
+ <div class="tbl"><h3>consents · usage</h3><ul><li class="fk">user_id → users</li><li>provider · decision</li><li>(off until "always")</li><li>usage: period · checks</li><li>(plan quota)</li></ul></div>
+ <h2 class="grp">Operations</h2>
+ <div class="tbl"><h3>error_events</h3><ul><li class="pk">fingerprint pk</li><li>error_type · route · frames</li><li>count · first/last seen</li><li>triage_note · issue_url</li></ul></div>
+ <div class="tbl"><h3>audit_log</h3><ul><li class="pk">audit_id pk</li><li>user_id · action</li><li>detail · ts</li></ul></div>
+ <div class="tbl"><h3>http_cache</h3><ul><li class="pk">url_sha256 pk</li><li>status · body</li><li>fetched_at (TTL)</li></ul></div>
+ <div class="tbl"><h3>attempts · loop_events · feedback</h3><ul><li class="fk">user_id → users</li><li>error_signature · shingles</li><li>reasons · suggestions</li><li>feedback: target · action</li></ul></div>
+</div>
+</div></body></html>
